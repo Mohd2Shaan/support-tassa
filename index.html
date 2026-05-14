@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Developer — Mohd Shaan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #07090f;
+    font-family: 'DM Mono', monospace;
+    color: #e2e8f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 480px;
+    animation: rise .55s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* top badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(63,255,192,0.07);
+    border: 1px solid rgba(63,255,192,0.2);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    color: #3fffc0;
+    letter-spacing: .07em;
+    margin-bottom: 2rem;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #3fffc0;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* avatar */
+  .avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .avatar {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a2a40 0%, #0f1c2e 100%);
+    border: 2px solid rgba(63,255,192,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #3fffc0;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 32px rgba(63,255,192,0.1);
+  }
+
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 4px;
+  }
+
+  .role {
+    font-size: 12px;
+    color: #5a6a88;
+    letter-spacing: .07em;
+  }
+
+  /* card */
+  .card {
+    background: #0f1420;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .card-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    color: #3fffc0;
+    letter-spacing: .1em;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background .15s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row:hover { background: rgba(255,255,255,0.03); }
+
+  .row-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .icon-gmail  { background: rgba(234,67,53,0.12); }
+  .icon-phone  { background: rgba(63,255,192,0.08); }
+  .icon-wa     { background: rgba(37,211,102,0.1); }
+
+  .row-body { flex: 1; min-width: 0; }
+
+  .row-label {
+    font-size: 11px;
+    color: #5a6a88;
+    letter-spacing: .06em;
+    margin-bottom: 3px;
+  }
+
+  .row-value {
+    font-size: 14px;
+    color: #e2e8f4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-action {
+    font-size: 11px;
+    color: #3fffc0;
+    opacity: 0;
+    transition: opacity .15s;
+    white-space: nowrap;
+  }
+
+  .contact-row:hover .row-action { opacity: 1; }
+
+  /* note card */
+  .note {
+    background: rgba(63,255,192,0.04);
+    border: 1px solid rgba(63,255,192,0.12);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 12px;
+    color: #5a6a88;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .note strong { color: #3fffc0; font-weight: 500; }
+
+  /* copy toast */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: #1c2a3a;
+    border: 1px solid rgba(63,255,192,0.3);
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 13px;
+    color: #3fffc0;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+    z-index: 99;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #2e3a50;
+    margin-top: 1.5rem;
+    letter-spacing: .04em;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div style="text-align:center;">
+    <div class="badge" style="margin-bottom:2rem; display:inline-flex;">
+      <div class="badge-dot"></div>
+      Apple App Developer
+    </div>
+  </div>
+
+  <div class="avatar-wrap">
+    <div class="avatar">MS</div>
+    <div class="name">Mohd Shaan</div>
+    <div class="role" style="margin-top:4px;">APP DEVELOPER &amp; </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">CONTACT DETAILS</div>
+
+    <a class="contact-row" href="mailto:tassa.delivery09@gmail.com">
+      <div class="row-icon icon-gmail">📧</div>
+      <div class="row-body">
+        <div class="row-label">GMAIL</div>
+        <div class="row-value">tassa.delivery09@gmail.com</div>
+      </div>
+      <div class="row-action">Send →</div>
+    </a>
+
+    <a class="contact-row" href="tel:+919813968581">
+      <div class="row-icon icon-phone">📞</div>
+      <div class="row-body">
+        <div class="row-label">PHONE</div>
+        <div class="row-value">+91 98139 68581</div>
+      </div>
+      <div class="row-action">Call →</div>
+    </a>
+
+    <a class="contact-row" href="https://wa.me/919813968581" target="_blank">
+      <div class="row-icon icon-wa">💬</div>
+      <div class="row-body">
+        <div class="row-label">WHATSAPP</div>
+        <div class="row-value">+91 98139 68581</div>
+      </div>
+      <div class="row-action">Chat →</div>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">QUICK COPY</div>
+
+    <div class="contact-row" onclick="copy('tassa.delivery09@gmail.com', 'Email copied!')">
+      <div class="row-icon icon-gmail">📋</div>
+      <div class="row-body">
+        <div class="row-label">COPY EMAIL</div>
+        <div class="row-value">tassa.delivery09@gmail.com</div>
+      </div>
+      <div class="row-action">Copy →</div>
+    </div>
+
+    <div class="contact-row" onclick="copy('+919813968581', 'Number copied!')">
+      <div class="row-icon icon-phone">📋</div>
+      <div class="row-body">
+        <div class="row-label">COPY NUMBER</div>
+        <div class="row-value">+91 98139 68581</div>
+      </div>
+      <div class="row-action">Copy →</div>
+    </div>
+  </div>
+
+  
+
+  <div class="footer-note">Mohd Shaan · App Developer · India</div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard ✓</div>
+
+<script>
+  function copy(text, msg) {
+    navigator.clipboard.writeText(text).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    });
+    const t = document.getElementById('toast');
+    t.textContent = msg + ' ✓';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+</script>
+</body>
+</html>
